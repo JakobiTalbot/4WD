@@ -8,6 +8,8 @@ public class FourWheelDrive : MonoBehaviour
     [SerializeField]
     private float m_rotateSpeed = 100f;
     [SerializeField]
+    private ForceMode m_turnForceMode;
+    [SerializeField]
 	private GameObject m_wheelPrefab;
 
     private WheelCollider[] wheels;
@@ -37,7 +39,7 @@ public class FourWheelDrive : MonoBehaviour
 		float torque = m_accelerateSpeed * Input.GetAxis("Vertical");
         float rotate = m_rotateSpeed * Input.GetAxis("Horizontal") * Time.deltaTime;
 
-        m_rb.AddTorque(new Vector3(0, 0, -rotate), ForceMode.Acceleration);
+        m_rb.AddRelativeTorque(new Vector3(rotate, 0, 0), m_turnForceMode);
 
         foreach (WheelCollider wheel in wheels)
 		{
