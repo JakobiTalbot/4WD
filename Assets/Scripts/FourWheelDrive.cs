@@ -18,6 +18,7 @@ public class FourWheelDrive : MonoBehaviour
     private float m_fuelConsumptionCoefficient = 1f;
 
     private UIManager m_uiManager;
+    private GameManager m_gameManager;
 
     private WheelCollider[] wheels;
     private Rigidbody m_rb;
@@ -31,6 +32,7 @@ public class FourWheelDrive : MonoBehaviour
 		wheels = GetComponentsInChildren<WheelCollider>();
         m_currentFuel = m_startingFuelValue;
         m_uiManager = UIManager.instance;
+        m_gameManager = GameManager.instance;
 
         for (int i = 0; i < wheels.Length; ++i) 
 		{
@@ -79,11 +81,20 @@ public class FourWheelDrive : MonoBehaviour
             // reduce fuel
             m_currentFuel -= m_fuelConsumptionCoefficient * Time.deltaTime;
             m_uiManager.SetFuelValue(m_currentFuel, m_startingFuelValue);
+            if (m_currentFuel <= 0f)
+            {
+                m_gameManager.GameOver("Out of Fuel!");
+            }
         }
 	}
 
     public void SetCanDrive(bool bCanDrive)
     {
         m_bCanDrive = bCanDrive;
+    }
+
+    public void AddFuel(float fuelAmount)
+    {
+        m_currentFuel += fuelAmount;
     }
 }

@@ -23,12 +23,12 @@ public class GameManager : MonoBehaviour
         m_player = FindObjectOfType<FourWheelDrive>();
     }
 
-    public void GameOver()
+    public void GameOver(string gameOverMessage)
     {
         // disable player movement
         m_player.SetCanDrive(false);
         // show game over UI
-        m_uiManager.GameOver();
+        m_uiManager.GameOver(gameOverMessage);
     }
 
     public void RestartLevel()
@@ -39,5 +39,10 @@ public class GameManager : MonoBehaviour
     public void PlayerEnteredFinishLine()
     {
 
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

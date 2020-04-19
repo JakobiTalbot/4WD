@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class UIManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField]
     private GameObject m_gameOverUIParent;
+    [SerializeField]
+    private TextMeshProUGUI m_gameOverMessage;
 
     private void Awake()
     {
@@ -33,8 +36,9 @@ public class UIManager : MonoBehaviour
         m_fuelGaugeFill.color = Color.Lerp(m_minFuelColour, m_maxFuelColour, percent) * 2f;
     }
 
-    public void GameOver()
+    public void GameOver(string gameOverMessage)
     {
+        m_gameOverMessage.text = gameOverMessage;
         m_gameOverUIParent.SetActive(true);
     }
 }
