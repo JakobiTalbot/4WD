@@ -12,6 +12,7 @@ public class FuelPickup : MonoBehaviour
         if (other.GetComponentInParent<FourWheelDrive>())
         {
             other.GetComponentInParent<FourWheelDrive>().AddFuel(m_fuelAddOnPickup);
+            gameObject.SetActive(false);
         }
     }
 }
