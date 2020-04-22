@@ -24,6 +24,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_gameOverMessage;
 
+    [Header("Level Complete")]
+    [SerializeField]
+    private GameObject m_levelCompleteUIParent;
+
     private void Awake()
     {
         instance = this;
@@ -40,5 +44,10 @@ public class UIManager : MonoBehaviour
     {
         m_gameOverMessage.text = gameOverMessage;
         m_gameOverUIParent.SetActive(true);
+    }
+
+    public void LevelComplete()
+    {
+        m_levelCompleteUIParent.SetActive(true);
     }
 }

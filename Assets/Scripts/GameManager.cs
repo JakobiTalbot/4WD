@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour
 
     public void PlayerEnteredFinishLine()
     {
-
+        // disable player movement
+        m_player.SetCanDrive(false);
+        // show level complete UI
+        m_uiManager.LevelComplete();
     }
 
     public void NextLevel()
