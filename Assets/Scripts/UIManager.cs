@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [SerializeField]
+    private GameObject m_gameCanvas;
+
     [Header("Fuel")]
     [SerializeField]
     private Slider m_fuelGauge;
@@ -30,7 +33,9 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (!instance)
+            instance = this;
+        DontDestroyOnLoad(m_gameCanvas);
     }
 
     public void SetFuelValue(float value, float maxValue)
@@ -49,5 +54,17 @@ public class UIManager : MonoBehaviour
     public void LevelComplete()
     {
         m_levelCompleteUIParent.SetActive(true);
+    }
+
+    public void EnableGameCanvas()
+    {
+        m_gameCanvas.SetActive(true);
+    }
+
+    // disables game over UI parent and level complete UI parent
+    public void HideGameUI()
+    {
+        m_gameOverUIParent.SetActive(false);
+        m_levelCompleteUIParent.SetActive(false);
     }
 }

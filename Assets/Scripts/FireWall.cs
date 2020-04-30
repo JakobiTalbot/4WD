@@ -12,4 +12,12 @@ public class FireWall : MonoBehaviour
     {
         transform.position += m_velocity * Time.fixedDeltaTime;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponentInParent<FourWheelDrive>())
+        {
+            GameManager.instance.GameOver("Consumed by Flames!");
+        }
+    }
 }

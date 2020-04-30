@@ -20,7 +20,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        m_player = FindObjectOfType<FourWheelDrive>();
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (level > 0)
+        {
+            m_player = FindObjectOfType<FourWheelDrive>();
+        }
     }
 
     public void GameOver(string gameOverMessage)
