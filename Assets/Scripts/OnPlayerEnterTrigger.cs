@@ -10,7 +10,7 @@ public class OnPlayerEnterTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<FourWheelDrive>())
+        if (other.GetComponent<FourWheelDrive>())
             m_onPlayerEnterTrigger.Invoke();
     }
 }

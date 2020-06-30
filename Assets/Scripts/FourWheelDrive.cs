@@ -16,6 +16,8 @@ public class FourWheelDrive : MonoBehaviour
     private float m_startingFuelValue = 100f;
     [SerializeField]
     private float m_fuelConsumptionCoefficient = 1f;
+    [SerializeField]
+    private float m_curvedTrackTurnSpeed = 0.1f;
 
     private UIManager m_uiManager;
     private GameManager m_gameManager;
@@ -24,6 +26,7 @@ public class FourWheelDrive : MonoBehaviour
     private Rigidbody m_rb;
     private float m_currentFuel;
     private bool m_bCanDrive = true;
+    private bool m_bFollowCurvedTrack = false;
 
     // here we find all the WheelColliders down in the hierarchy
     public void Start()
@@ -96,5 +99,33 @@ public class FourWheelDrive : MonoBehaviour
     public void AddFuel(float fuelAmount)
     {
         m_currentFuel += fuelAmount;
+    }
+
+    public void SetFollowCurvedTrack(BezierSpline trackSpline, bool bFollowCurvedTrack)
+    {
+        m_bFollowCurvedTrack = bFollowCurvedTrack;
+
+        if (m_bFollowCurvedTrack)
+        {
+            m_rb.constraints = RigidbodyConstraints.FreezeRotationZ;
+            StartCoroutine(FollowCurvedTrack(trackSpline));
+        }
+        else
+        {
+            m_rb.constraints |= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
+            transform.rotation = Quaternion.LookRotation(Vector3.right);
+        }
+    }
+
+    private IEnumerator FollowCurvedTrack(BezierSpline trackSpline)
+    {
+        while (m_bFollowCurvedTrack && m_bCanDrive)
+        {
+            Vector3 dir = Vector3.Lerp(transform.forward, trackSpline.GetDirection(trackSpline.ProjectPoint(transform.position)), m_curvedTrackTurnSpeed);
+            m_rb.rotation = Quaternion.LookRotation(dir);
+            m_rb.velocity = dir * m_rb.velocity.magnitude;
+
+            yield return null;
+        }
     }
 }

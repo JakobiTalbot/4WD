@@ -15,7 +15,7 @@ public class FireWall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<FourWheelDrive>())
+        if (other.GetComponent<FourWheelDrive>())
         {
             GameManager.instance.GameOver("Consumed by Flames!");
         }

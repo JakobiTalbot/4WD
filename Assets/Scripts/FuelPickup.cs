@@ -9,9 +9,9 @@ public class FuelPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<FourWheelDrive>())
+        if (other.GetComponent<FourWheelDrive>())
         {
-            other.GetComponentInParent<FourWheelDrive>().AddFuel(m_fuelAddOnPickup);
+            other.GetComponent<FourWheelDrive>().AddFuel(m_fuelAddOnPickup);
             gameObject.SetActive(false);
         }
     }
