@@ -18,6 +18,8 @@ public class FourWheelDrive : MonoBehaviour
     private float m_fuelConsumptionCoefficient = 1f;
     [SerializeField]
     private float m_curvedTrackTurnSpeed = 0.1f;
+    [SerializeField]
+    private float m_downforceCoefficient = 1f;
 
     private UIManager m_uiManager;
     private GameManager m_gameManager;
@@ -90,6 +92,12 @@ public class FourWheelDrive : MonoBehaviour
             }
         }
 	}
+
+    private void FixedUpdate()
+    {
+        // downforce
+        m_rb.AddForce(Vector3.down * m_rb.velocity.magnitude * m_downforceCoefficient);
+    }
 
     public void SetCanDrive(bool bCanDrive)
     {
