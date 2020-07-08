@@ -18,6 +18,11 @@ public class LevelGenerator : MonoBehaviour
     private GameObject m_animalPrefab;
     [SerializeField]
     private int m_animalsCount = 2;
+    [Header("Fuel")]
+    [SerializeField]
+    private GameObject m_fuelPickupPrefab;
+    [SerializeField]
+    private int m_fuelPickupCount = 2;
 
     private void Start()
     {
@@ -50,6 +55,25 @@ public class LevelGenerator : MonoBehaviour
 
             // spawn animal
             Instantiate(m_animalPrefab, new Vector3(x, y), Quaternion.identity);
+        }
+
+        // spawn fuel pickups
+        for (int i = 0; i < m_fuelPickupCount; ++i)
+        {
+            // get fuel pickup X
+            float x = m_levelLength * m_trackPrefabLength / m_fuelPickupCount;
+            float lowerX = x * i;
+            float upperX = x * (i + 1);
+            x = Random.Range(lowerX, upperX);
+
+            // raycast for Y
+            RaycastHit hit;
+            Ray ray = new Ray(new Vector3(x, 50f), Vector3.down);
+            Physics.Raycast(ray, out hit, 50f);
+            float y = hit.point.y + 1f;
+
+            // spawn fuel pickup
+            Instantiate(m_fuelPickupPrefab, new Vector3(x, y), Quaternion.identity);
         }
     }
 }
